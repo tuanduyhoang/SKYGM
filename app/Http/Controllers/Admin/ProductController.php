@@ -18,11 +18,7 @@ class ProductController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function all() {
-        $products = \App\Models\Product::orderBy('id','DESC')->paginate(0);
-        // dd($products);
-        return view('products.all',compact('products'));
-    }
+
      public function index()
     {
         $products = Product::orderBy('id','DESC')->paginate(6);

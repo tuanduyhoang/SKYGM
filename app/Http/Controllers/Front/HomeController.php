@@ -53,5 +53,10 @@ class HomeController extends Controller
     public function about () {
         return view('front.about');
     }
+    public function all() {
+        $products = \App\Models\Product::orderBy('id','DESC')->paginate(0);
+        // dd($products);
+        return view('front.all',compact('products'));
+    }
 
 }

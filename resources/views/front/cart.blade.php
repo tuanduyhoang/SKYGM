@@ -22,7 +22,9 @@
                 <div class="page-main-content">
                     <div class="kobolg">
                         <div class="kobolg-notices-wrapper"></div>
-                        <form class="kobolg-cart-form">
+                        <form class="kobolg-cart-form"  action="{{route('updatecart')}}" method="POST" >
+                            @csrf
+                            @method('put')
                             <table class="shop_table shop_table_responsive cart kobolg-cart-form__contents"
                                    cellspacing="0">
                                 <thead>
@@ -37,160 +39,58 @@
                                 </thead>
                                 <tbody>
                                     @if (Cart::count()>0)
-                                    @foreach ($items as $item)
-                                    {{-- <?php
-                                    $content = Cart::getContent();
-                                    echo '<pre>';
-                                        var_dump($items);
-                                    ?> --}}
-                                    <tr class="kobolg-cart-form__cart-item cart_item">
-                                        <td class="product-remove">
-                                            <a href="{{asset('cart/delete/'.$item->id)}}"
-                                               class="remove" aria-label="Remove this item" data-product_id="27"
-                                               data-product_sku="885B712">×</a>
-                                            {{-- <form action="{{ route('deletecart',$item->id) }}" method="POST" enctype="multipart/form-data">
-                                                <input type="hidden" value="">
-                                                @csrf
-                                                @method('delete')
-
-                                                <button type="submit" class="remove" aria-label="Remove this item" data-product_id="27"
-                                                data-product_sku="885B712">x</button>
-                                            </form> --}}
-
-                                            </td>
-                                        <td class="product-thumbnail">
-                                            <img
-                                                    src="{{asset($item->options->img)}}"
-                                                    class="attachment-kobolg_thumbnail size-kobolg_thumbnail"
-                                                    alt="img" width="600" height="778"></td>
-                                        <td class="product-name" data-title="Product">
-                                            <a href="#">{{$item->name}}</a></td>
-                                        <td class="product-price" data-title="Price">
-                                            <span class="kobolg-Price-amount amount"><span
-                                                    class="kobolg-Price-currencySymbol"></span>{{number_format($item->price)}} VNĐ</span></td>
-                                        <td class="product-quantity" data-title="Quantity">
-                                            <div class="quantity">
-                                                {{-- <span class="qty-label">Quantiy:</span> --}}
-                                                <div class="control">
-                                                    {{-- <a class="btn-number qtyminus quantity-minus" wire:click.prevent="decreaseQuantity('{{$item->rowId}}')" href="#">-</a> --}}
-                                                    <input type="number"
-                                                           value="{{$item->qty}}" title="Qty" name="qty" min="1" class="white center">
-                                                    {{-- <a class="btn-number qtyplus quantity-plus" wire:click.prevent="increaseQuantity('{{$item->rowId}}')" href="#">+</a> --}}
+                                        @foreach ($items as $item)
+                                            <tr class="kobolg-cart-form__cart-item cart_item">
+                                                <td class="product-remove">
+                                                    <a href="{{asset('cart/delete/'.$item->rowId)}}"
+                                                    class="remove" aria-label="Remove this item" data-product_id="27"
+                                                    data-product_sku="885B712">×</a>
+                                                    <input type="hidden" name="rowIds[]" value="{{$item->rowId}}">
+                                                </td>
+                                                <td class="product-thumbnail">
+                                                    <img
+                                                            src="{{asset($item->options->img)}}"
+                                                            class="attachment-kobolg_thumbnail size-kobolg_thumbnail"
+                                                            alt="img" width="600" height="778"></td>
+                                                <td class="product-name" data-title="Product">
+                                                    <a href="#">{{$item->name}}</a></td>
+                                                <td class="product-price" data-title="Price">
+                                                    <span class="kobolg-Price-amount amount"><span
+                                                            class="kobolg-Price-currencySymbol"></span>{{number_format($item->price)}} VNĐ</span></td>
+                                                <td class="product-quantity" data-title="Quantity">
+                                                    <div class="quantity">
+                                                        {{-- <span class="qty-label">Quantiy:</span> --}}
+                                                        <div class="control">
+                                                            {{-- <a class="btn-number qtyminus quantity-minus" wire:click.prevent="decreaseQuantity('{{$item->rowId}}')" href="#">-</a> --}}
+                                                            <input type="number"
+                                                                value="{{$item->qty}}" title="Qty" name="rowQties[]" min="1" class="white center">
+                                                            {{-- <a class="btn-number qtyplus quantity-plus" wire:click.prevent="increaseQuantity('{{$item->rowId}}')" href="#">+</a> --}}
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                                <td class="product-subtotal" data-title="Total">
+                                                    <span class="kobolg-Price-amount amount"><span
+                                                            class="kobolg-Price-currencySymbol"></span>{{number_format($item->price*$item->qty)}} VNĐ</span></td>
+                                            </tr>
+                                        @endforeach
+                                        <tr>
+                                            <td colspan="6" class="actions">
+                                                <div class="d-flex justify-content-center gap-2">
+                                                    <a  href="{{route('deleteall')}}"  class="btn btn-warning"
+                                                    >Delete all
+                                                    </a>
+                                                    <button type="submit" class="btn btn-danger"
+                                                    >Update cart
+                                                        </button>
+                                                    <input type="hidden" id="kobolg-cart-nonce" name="kobolg-cart-nonce"
+                                                           value="f41b5bf554"><input type="hidden" name="_wp_http_referer"
+                                                                                     value="/kobolg/cart/">
                                                 </div>
-                                            </div>
-                                        </td>
-                                        <td class="product-subtotal" data-title="Total">
-                                            <span class="kobolg-Price-amount amount"><span
-                                                    class="kobolg-Price-currencySymbol"></span>{{number_format($item->price*$item->qty)}} VNĐ</span></td>
-                                    </tr>
-                                    @endforeach
+                                            </td>
+                                        </tr>
                                     @else
-                                        <center><p>No item in cart</p></center>
+                                        <tr><td colspan="6" style="text-align: center">No item in cart</td></tr>
                                     @endif
-
-
-                                {{-- <tr class="kobolg-cart-form__cart-item cart_item">
-                                    <td class="product-remove">
-                                        <a href="#"
-                                           class="remove" aria-label="Remove this item" data-product_id="29"
-                                           data-product_sku="003D754">×</a></td>
-                                    <td class="product-thumbnail">
-                                        <a href="#"><img
-                                                src="{{asset('assets/images/apro1113-600x778.jpg')}}"
-                                                class="attachment-kobolg_thumbnail size-kobolg_thumbnail"
-                                                alt="img" width="600" height="778"></a></td>
-                                    <td class="product-name" data-title="Product">
-                                        <a href="#">Short Sleeve
-                                            Loose</a></td>
-                                    <td class="product-price" data-title="Price">
-                                        <span class="kobolg-Price-amount amount"><span
-                                                class="kobolg-Price-currencySymbol">$</span>129.00</span></td>
-                                    <td class="product-quantity" data-title="Quantity">
-                                        <div class="quantity">
-                                            <span class="qty-label">Quantiy:</span>
-                                            <div class="control">
-                                                <a class="btn-number qtyminus quantity-minus" href="#">-</a>
-                                                <input type="text"
-                                                       value="1" title="Qty" class="input-qty input-text qty text">
-                                                <a class="btn-number qtyplus quantity-plus" href="#">+</a>
-                                            </div>
-                                        </div>
-                                    </td>
-                                    <td class="product-subtotal" data-title="Total">
-                                        <span class="kobolg-Price-amount amount"><span
-                                                class="kobolg-Price-currencySymbol">$</span>129.00</span></td>
-                                </tr>
-                                <tr class="kobolg-cart-form__cart-item cart_item">
-                                    <td class="product-remove">
-                                        <a href="#"
-                                           class="remove" aria-label="Remove this item" data-product_id="20"
-                                           data-product_sku="775E109">×</a></td>
-                                    <td class="product-thumbnail">
-                                        <a href="#"><img
-                                                src="{{asset('assets/images/apro201-1-600x778.jpg')}}"
-                                                class="attachment-kobolg_thumbnail size-kobolg_thumbnail"
-                                                alt="img" width="600" height="778"></a></td>
-                                    <td class="product-name" data-title="Product">
-                                        <a href="#">Smart Monitor</a></td>
-                                    <td class="product-price" data-title="Price">
-                                        <span class="kobolg-Price-amount amount"><span
-                                                class="kobolg-Price-currencySymbol">$</span>139.00</span></td>
-                                    <td class="product-quantity" data-title="Quantity">
-                                        <div class="quantity">
-                                            <span class="qty-label">Quantiy:</span>
-                                            <div class="control">
-                                                <a class="btn-number qtyminus quantity-minus" href="#">-</a>
-                                                <input type="text"
-                                                       value="1" title="Qty" class="input-qty input-text qty text">
-                                                <a class="btn-number qtyplus quantity-plus" href="#">+</a>
-                                            </div>
-                                        </div>
-                                    </td>
-                                    <td class="product-subtotal" data-title="Total">
-                                        <span class="kobolg-Price-amount amount"><span
-                                                class="kobolg-Price-currencySymbol">$</span>139.00</span></td>
-                                </tr> --}}
-                                <tr>
-                                    <td colspan="6" class="actions">
-                                        <div class="coupon">
-                                            {{-- <label for="coupon_code">Coupon:</label> <input type="text"
-                                                                                            name="coupon_code"
-                                                                                            class="input-text"
-                                                                                            id="coupon_code" value=""
-                                                                                            placeholder="Coupon code"> --}}
-                                            {{-- <a href="{{asset('cart/delete/all')}}" class="btn btn-warning" name="apply_coupon"
-                                                    value="Apply coupon">Clear cmm hết
-                                            </a> --}}
-                                            {{-- @dd(\Cart::getContent()) --}}
-                                            <form action="{{route('deleteall')}}" method="POST" enctype="multipart/form-data">
-                                                @csrf
-                                                @method('Delete')
-
-                                                <button type="submit" class="button" name="update_cart" value="Update cart"
-                                                >Delete all
-                                                </button>
-                                            </form>
-                                        </div>
-
-
-                                        <form action="{{route('updatecart', 3)}}" method="POST" enctype="multipart/form-data">
-                                            @csrf
-                                            @method('put')
-
-                                            <button type="submit" class="button" name="update_cart" value="Update cart"
-                                            >Update cart
-                                            </button>
-                                        </form>
-                                        {{-- <div class="quantity-input">
-                                            <input type="text" name="product-quatity" value="{{$item->qty}}" data-max="120" pattern="[0-9]*" >
-                                            <a class="btn btn-increase" href="#" wire:click.prevent="increaseQuantity('{{$item->rowId}}')"></a>
-                                            <a class="btn btn-reduce" href="#" wire:click.prevent="decreaseQuantity('{{$item->rowId}}')"></a>
-                                        </div> --}}
-
-                                        <input type="hidden" id="kobolg-cart-nonce" name="kobolg-cart-nonce"
-                                               value="f41b5bf554"><input type="hidden" name="_wp_http_referer"
-                                                                         value="/kobolg/cart/"></td>
-                                </tr>
                                 </tbody>
                             </table>
                         </form>
@@ -213,11 +113,13 @@
                                     </tr>
                                     </tbody>
                                 </table>
-                                <div class="kobolg-proceed-to-checkout">
-                                    <a href="{{route('checkout')}}"
-                                       class="checkout-button button alt kobolg-forward">
-                                        Proceed to checkout</a>
-                                </div>
+                                @if(Cart::count() > 0)
+                                    <div class="kobolg-proceed-to-checkout">
+                                        <a href="{{route('checkout')}}"
+                                        class="checkout-button button alt kobolg-forward">
+                                            Proceed to checkout</a>
+                                    </div>
+                                @endif
                             </div>
                         </div>
                         <div class="col-md-12 col-sm-12 dreaming_crosssell-product">

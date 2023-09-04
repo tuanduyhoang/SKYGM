@@ -12,6 +12,7 @@ class HomeController extends Controller
     {
         // $user = Auth::guard('admin')->user();
         // echo 'Xin chào Admin, '. $user->name;
+        // dd(1);
         return view('admin.master');
     }
 }

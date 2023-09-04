@@ -13,7 +13,7 @@
                 <li class="nav-item">
                   <a data-toggle="pill" href="#nav-tab-card" class="nav-link active rounded-pill">
                                       <i class="fa fa-credit-card"></i>
-                                      {{Auth::user()->name}}
+                                      {{Auth::guard('admin')->user()->name}}
                                   </a>
                 </li>
                 {{-- <li class="nav-item">

@@ -48,14 +48,30 @@ Route::group([
 });
 Route::post('/cart/add/{id}', 'CartController@getAddCart')->name('addcart');
 Route::get('/cart/show', 'CartController@getShowCart')->name('showcart');
-Route::put('/cart/update/{id}','CartController@getUpdateCart')->name('updatecart');
+Route::put('/cart/update','CartController@getUpdateCart')->name('updatecart'); // cach khai bao class nay cu r, sau nen thay lai theo cach moi
 Route::get('/cart/delete/{id}','CartController@getDeleteCart')->name('deletecart');
-Route::delete('/cart/delete','CartController@getDeleteAll')->name('deleteall');
-Route::get('checkout','CartController@checkout')->name('checkout');
+Route::get('/cart/delete','CartController@getDeleteAll')->name('deleteall');
+Route::get('checkout','CartController@checkout')->name('checkout')->middleware('auth');
 
 Route::post('/vnpay-payment','CheckoutController@vnpaypayment')->name('vnpaypayment');
 Route::get('complete', 'CartController@getComplete')->name('complete');
 Route::post('/cart/send', 'CartController@postComplete')->name('post.complete');
+
+
+Route::resource('users','UsersController')->middleware('auth');
+Route::group([
+    'namespace' => 'Front',
+    'prefix' => 'product',
+    'as' => 'product.'
+], function() {
+    Route::get('all', 'HomeController@all')->name('all')->middleware('auth');
+    // Route::get('create', 'ProductController@create')->name('create');
+    // Route::post('store', 'ProductController@store')->name('store');
+    // Route::get('index', 'ProductController@index')->name('index');
+    // Route::get('{product}/edit', 'ProductController@edit')->name('edit');
+    // Route::put('{product}', 'ProductController@update')->name('update');
+    // Route::delete('delete/{product}', 'ProductController@destroy')->name('destroy');
+});
 
 
 
@@ -96,24 +112,11 @@ Route::middleware(['auth','is_user_verify_email'])->group(function()
     // });
 
 
-    Route::group([
-        'namespace' => 'Admin',
-        'prefix' => 'product',
-        'as' => 'product.'
-    ], function() {
-        Route::get('all', 'ProductController@all')->name('all');
-        // Route::get('create', 'ProductController@create')->name('create');
-        // Route::post('store', 'ProductController@store')->name('store');
-        // Route::get('index', 'ProductController@index')->name('index');
-        // Route::get('{product}/edit', 'ProductController@edit')->name('edit');
-        // Route::put('{product}', 'ProductController@update')->name('update');
-        // Route::delete('delete/{product}', 'ProductController@destroy')->name('destroy');
-    });
 
     // Route::resource('product', 'ProductController');
 
 
-    Route::resource('users','UsersController');
+
     // Route::get('users/{user}/edit', 'UsersController@edit')->name('users.edit');
     // Route::put('users/{user}', 'UsersController@update')->name('users.update');
 

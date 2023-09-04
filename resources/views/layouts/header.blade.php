@@ -186,7 +186,7 @@
                                         <ul class="kobolg-mini-cart cart_list product_list_widget">
                                             @foreach (Cart::content() as $item)
                                             <li class="kobolg-mini-cart-item mini_cart_item">
-                                                <a href="{{asset('cart/delete/'.$item->id)}}" class="remove remove_from_cart_button">×</a>
+                                                <a href="{{asset('cart/delete/'.$item->rowId)}}" class="remove remove_from_cart_button">×</a>
                                                 {{-- <form action="{{ route('deletecart',$item->id) }}" method="POST" enctype="multipart/form-data">
                                                     <input type="hidden" value="">
                                                     @csrf

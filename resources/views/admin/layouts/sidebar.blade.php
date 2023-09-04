@@ -15,7 +15,7 @@
                       alt="User Image">
               </div>
               <div class="info">
-                  <a href="{{route('admin.master')}}" class="d-block">{{ Auth::user()->name }}</a>
+                  <a href="{{route('admin.master')}}" class="d-block">{{Auth::guard('admin')->user()->name}}</a>
               </div>
           </div>
 

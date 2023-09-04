@@ -62,75 +62,56 @@
                                 </tr>
                                 </thead>
                                 <tbody>
-                                    @if (Cart::count()>0)
-                                    @foreach ($items as $item)
-                                    {{-- <?php
-                                    $content = Cart::getContent();
-                                    echo '<pre>';
-                                        var_dump($items);
-                                    ?> --}}
-                                    <tr class="kobolg-cart-form__cart-item cart_item">
-                                        <td class="product-remove">
-
-                                            {{-- <form action="{{ route('deletecart',$item->id) }}" method="POST" enctype="multipart/form-data">
-                                                <input type="hidden" value="">
-                                                @csrf
-                                                @method('delete')
-
-                                                <button type="submit" class="remove" aria-label="Remove this item" data-product_id="27"
-                                                data-product_sku="885B712">x</button>
-                                            </form> --}}
-
+                                    @if ($items->count() > 0)
+                                        @foreach ($items as $item)
+                                        <tr class="kobolg-cart-form__cart-item cart_item">
+                                            <td class="product-remove">
+                                                </td>
+                                            <td class="product-thumbnail">
+                                                {{-- <img
+                                                        src="{{asset($item->options->img)}}"
+                                                        class="attachment-kobolg_thumbnail size-kobolg_thumbnail"
+                                                        alt="img" width="600" height="778"></td> --}}
+                                            <td class="product-name" data-title="Product">
+                                                <ul>
+                                                    @foreach($item->products as $product)
+                                                        <li>
+                                                            <a href="{{asset('detail/'.$product->id.'/'.$product->slug.'.html')}}" class="block">{{ $product->name }}</a>
+                                                        </li>
+                                                    @endforeach
+                                                </ul>
                                             </td>
-                                        <td class="product-thumbnail">
-                                            <img
-                                                    src="{{asset($item->options->img)}}"
-                                                    class="attachment-kobolg_thumbnail size-kobolg_thumbnail"
-                                                    alt="img" width="600" height="778"></td>
-                                        <td class="product-name" data-title="Product">
-                                            {{$item->name}}</td>
-                                        <td class="product-quantity" data-title="Quantity">
-                                                <div class="quantity">
-                                                    {{-- <span class="qty-label">Quantiy:</span> --}}
-                                                    <div class="control">
-                                                        {{-- <a class="btn-number qtyminus quantity-minus" wire:click.prevent="decreaseQuantity('{{$item->rowId}}')" href="#">-</a> --}}
-                                                        <input type="number"
-                                                               value="{{$item->qty}}" title="Qty" name="quantity" class="white center" disabled>
-                                                        {{-- <a class="btn-number qtyplus quantity-plus" wire:click.prevent="increaseQuantity('{{$item->rowId}}')" href="#">+</a> --}}
-                                                    </div>
+                                            <td class="product-quantity" data-title="Quantity">
+                                            </td>
+                                            <td class="product-subtotal" data-title="Total">
+                                                <span class="kobolg-Price-amount amount"><span
+                                                        class="kobolg-Price-currencySymbol"></span>{{number_format($item->price)}} VNĐ</span></td>
+                                            <td>
+                                                <div class="col-md-18">
+                                                    <select name="status" id="status" class="form-control" disabled>
+                                                        <option value="0">Đang xử lí</option>
+                                                        <option value="1">Đã xử lí</option>
+                                                        <option value="2">Đang giao hàng</option>
+                                                        <option value="3">Giao hàng thất bại</option>
+                                                        <option value="4">Đã giao hàng</option>
+                                                    </select>
                                                 </div>
-                                        </td>
-                                        <td class="product-subtotal" data-title="Total">
-                                                        <span class="kobolg-Price-amount amount"><span
-                                                                class="kobolg-Price-currencySymbol"></span>{{number_format(Cart::total())}} VNĐ</span></td>
-                                        <td>
-                                                                    <div class="col-md-18">
-
-                                                                        <select name="status" id="status" class="form-control">
-                                                                            <option value="0">Đang xử lí</option>
-                                                                            <option value="1">Đã xử lí</option>
-                                                                            <option value="2">Đang giao hàng</option>
-                                                                            <option value="3">Giao hàng thất bại</option>
-                                                                            <option value="4">Đã giao hàng</option>
-                                                                        </select>
-
-                                                                    </div>
-                                        </td>
-                                        <td>
-                                            <div class="col-md-1 col-lg-1 col-xl-1 text-end">
-                                              {{-- <a href="{{'delete/'.$product->id}}" class="text-danger"><i class="fas fa-trash fa-lg"></i>Cancel</a> --}}
-                                              <a href="{{asset('delete/'.$item->id)}}"
-                                                class="remove" aria-label="Remove this item" data-product_id="27"
-                                                data-product_sku="885B712"><i class="fa-solid fa-trash"></i> Cancel</a>
-                                            </div>
-                                          </td>
+                                            </td>
+                                            <td>
+                                                <div class="col-md-1 col-lg-1 col-xl-1 text-end">
+                                                {{-- <a href="{{'delete/'.$product->id}}" class="text-danger"><i class="fas fa-trash fa-lg"></i>Cancel</a> --}}
+                                                <a href="{{asset('delete/'.$item->id)}}"
+                                                    class="remove" aria-label="Remove this item" data-product_id="27"
+                                                    data-product_sku="885B712"><i class="fa-solid fa-trash"></i> Cancel</a>
+                                                </div>
+                                            </td>
 
 
 
-                                    </tr>
-                                    @endforeach
+                                        </tr>
+                                        @endforeach
                                     @else
-                                        <center><p>No item in cart</p></center>
+                                        <tr><td colspan="6" style="text-align:center">No item in cart</td></tr>
                                     @endif
 
 

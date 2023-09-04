@@ -371,15 +371,6 @@
                                                                                              autocomplete="email username"></span>
                                             </p></div>
                                     </div>
-                                    <div class="kobolg-account-fields">
-                                        <p class="form-row form-row-wide create-account kobolg-validated">
-                                            <label class="kobolg-form__label kobolg-form__label-for-checkbox checkbox">
-                                                <input class="kobolg-form__input kobolg-form__input-checkbox input-checkbox"
-                                                       id="createaccount" type="checkbox" name="createaccount"
-                                                       value="1"> <span>Create an account?</span>
-                                            </label>
-                                        </p>
-                                    </div>
                                 </div>
                                 <div class="col-2">
                                     <div class="kobolg-shipping-fields">
@@ -391,11 +382,11 @@
                                                     for="order_comments" class="">Order notes&nbsp;<span
                                                     class="optional">(optional)</span></label><span
                                                     class="kobolg-input-wrapper"><textarea name="order_comments"
-                                                                                                class="input-text "
-                                                                                                id="order_comments"
-                                                                                                placeholder="Notes about your order, e.g. special notes for delivery."
-                                                                                                rows="2"
-                                                                                                cols="5"></textarea></span>
+                                                                                            class="input-text "
+                                                                                            id="order_comments"
+                                                                                            placeholder="Notes about your order, e.g. special notes for delivery."
+                                                                                            rows="2"
+                                                                                            cols="5"></textarea></span>
                                             </p></div>
                                     </div>
                                 </div>
@@ -414,29 +405,12 @@
                                         <tr class="cart_item">
                                             <td class="product-name">
                                                 {{$item->name}} <strong class="product-quantity">×
-                                                1</strong></td>
+                                                    {{$item->qty}}</strong></td>
                                             <td class="product-total">
                                                 <span class="kobolg-Price-amount amount"><span
                                                         class="kobolg-Price-currencySymbol"></span>{{number_format($item->price)}} VNĐ</span></td>
                                         </tr>
                                         @endforeach
-
-                                    {{-- <tr class="cart_item">
-                                        <td class="product-name">
-                                            Red Consoles&nbsp;&nbsp; <strong class="product-quantity">× 1</strong>
-                                        </td>
-                                        <td class="product-total">
-                                            <span class="kobolg-Price-amount amount"><span
-                                                    class="kobolg-Price-currencySymbol">$</span>129.00</span></td>
-                                    </tr>
-                                    <tr class="cart_item">
-                                        <td class="product-name">
-                                            Smart Monitor&nbsp;&nbsp; <strong class="product-quantity">×
-                                            1</strong></td>
-                                        <td class="product-total">
-                                            <span class="kobolg-Price-amount amount"><span
-                                                    class="kobolg-Price-currencySymbol">$</span>139.00</span></td>
-                                    </tr> --}}
                                     </tbody>
                                     <tfoot>
                                     <tr class="cart-subtotal">

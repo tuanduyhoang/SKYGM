@@ -1,5 +1,6 @@
 @extends('master')
 @section('main')
+
 <form action="{{route('category.update',$category)}}" method="POST" enctype="multipart/form-data">
     @csrf
     @method('put')

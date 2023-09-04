@@ -60,29 +60,16 @@ class CartController extends Controller
         // dd($data);
         return view('front.cart',$data);
     }
-    public function getUpdateCart(Request $request,$rowId) {
-        // $rowId = 'da39a3ee5e6b4b0d3255bfef95601890afd80709';
-        // $row = Cart::get($rowId);
-// dd(request()->all(), $id);
-        // Cart::update($rowId, $row->quantity + 1);
-        // Cart::update($id, array(
-        // //     'quantity' => 1, // so if the current product has a quantity of 4, another 2 will be added so this will result to 6
-        // //   ));
-        //     $row = Cart::getContent()[$id];
-        //     // dd();
-        //      $row['item']->quantity +=  1;
-        //     dd($row);
+    public function getUpdateCart(Request $request) {
+        $rowIds = $request->rowIds;
+        $rowQties= $request->rowQties;
 
-        //     Cart::update($id, $row);
-        // $rowId = $request->id;
-        // dd($rowId);
-        $product = Cart::get($rowId);
-        $qty = $product->qty + 1;
-        // Cart::update($rowId,$qty);
+        foreach($rowIds as $key => $rowId) {
+            Cart::update($rowId,  $rowQties[$key]);
 
-        Cart::update($rowId, $qty);
+        }
 
-        // Cart::update($id,['qty'=> $request->qty]);
+        return back()->with('success','Item has been updated');
 
     }
     public function increaseQuantity(Request $request,$rowId)
@@ -119,10 +106,8 @@ class CartController extends Controller
             // $rowId = $request->id;
             // Cart::remove($id);//xoa mot san pham trong gio hang
             $cart = Cart::content();
-            // dd($cart);
-            $rowId ='4063dbcfc3ecc680c43ce5ac10e80850';
             if($cart->isNotEmpty()){
-                Cart::remove($rowId);
+                Cart::remove($id);
             }
 
             return back()->with('success','Item has been removed');
@@ -134,7 +119,7 @@ class CartController extends Controller
     }
     public function getDeleteAll() {
         Cart::destroy();
-            return back()->with('success','All Items have been removed');
+        return back()->with('success','All Items have been removed');
     }
     public function checkout () {
         $data['items'] = Cart::content();
@@ -143,16 +128,41 @@ class CartController extends Controller
     }
     public function postComplete(Request $request)
     {
-    //     $data['info'] =$request->only(  'name',
-    //     'email',
-    //     'status',
-    //    'price',
-    //     'phone',
-    //     'address',);
 
-    //    $data['created_at'] = now();
-    //    $data['updated_at'] = now();
 
+        $request->validate([
+            'name' => 'required',
+            'billing_country' => 'required',
+            'address'  => 'required',
+            'phone'  => 'required',
+            'email' => 'required|email',
+        ]);
+
+        $array = Cart::content()->map(fn($item) => [ $item->id =>[
+            'quantity' => $item->qty,
+        ]])->toArray();
+        $resultArray = [];
+
+        foreach ($array as $key => $value) {
+            $resultArray += $value;
+        }
+
+        $user = \Auth::user();
+
+        $order = $user->orders()->create([
+            'name'  =>   $request->name,
+            'email' =>  $request->email,
+            'status' => 'pending',
+           'price' =>   Cart::total(),
+            'phone' => $request->phone,
+            'address' => $request->address,
+        ]);
+
+        $order->products()->sync($resultArray);
+
+        // dd(1);
+
+        // $order->products
 
         $data['total'] = Cart::total();
         $data['info'] = $request->all();
@@ -165,12 +175,13 @@ class CartController extends Controller
             $message->cc('sc.duyhoang@gmail.com', 'DH');
             $message->subject('Purchase receipt confirmation SKYGM');
         });
-        // Order::create($data);
+        Cart::destroy();
         return redirect()->route('complete')->with('success','Successful order, please check your email');
     }
     public function getComplete(){
 
-        $data['items'] = Cart::content();
+        $data['items'] = \Auth::user()->orders;
+        // dd($data['items']);
         return view('front.complete', $data);
     }
 }

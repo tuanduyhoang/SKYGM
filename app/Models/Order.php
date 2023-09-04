@@ -16,4 +16,12 @@ class Order extends Model
         'phone',
         'address',
     ];
+
+    public function user() {
+        $this->hasOne(User::class, 'id', 'user_id');
+    }
+
+    public function products() {
+        return $this->belongsToMany(Product::class, 'order_products')->withPivot(['quantity']);
+    }
 }

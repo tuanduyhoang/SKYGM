@@ -289,7 +289,7 @@
                                     <div id="review_form">
                                         <div id="respond" class="comment-respond">
                                             <span id="reply-title" class="comment-reply-title">Be the first to review “{{$item->name}}”</span>
-                                            <form id="commentform" class="comment-form">
+                                            <form id="commentform" class="comment-form" method="POST" action="">
                                                 <p class="comment-notes"><span id="email-notes">Your email addresses will not be published.</span>
                                                     Required fields are marked <span class="required">*</span></p>
                                                 <p class="comment-form-author">
