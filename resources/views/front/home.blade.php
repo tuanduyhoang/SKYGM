@@ -167,7 +167,7 @@
                                     <a class="kobolg-menu-item-title" title="Shop"
                                        href="shop.html">Shop</a>
                                     <span class="toggle-submenu"></span>
-                                    <div class="submenu megamenu megamenu-shop">
+                                    {{-- <div class="submenu megamenu megamenu-shop">
                                         <div class="row">
                                             <div class="col-md-4">
                                                 <div class="kobolg-listitem style-01">
@@ -339,13 +339,13 @@
                                                 </div>
                                             </div>
                                         </div>
-                                    </div>
+                                    </div> --}}
                                 </li>
                                 <li id="menu-item-229"
                                     class="menu-item menu-item-type-post_type menu-item-object-megamenu menu-item-229 parent parent-megamenu item-megamenu menu-item-has-children">
                                     <a class="kobolg-menu-item-title" title="Elements" href="#">Elements</a>
                                     <span class="toggle-submenu"></span>
-                                    <div class="submenu megamenu megamenu-elements">
+                                    {{-- <div class="submenu megamenu megamenu-elements">
                                         <div class="row">
                                             <div class="col-md-4">
                                                 <div class="kobolg-listitem style-01">
@@ -435,14 +435,14 @@
                                                 </div>
                                             </div>
                                         </div>
-                                    </div>
+                                    </div> --}}
                                 </li>
                                 <li id="menu-item-996"
                                     class="menu-item menu-item-type-post_type menu-item-object-megamenu menu-item-996 parent parent-megamenu item-megamenu menu-item-has-children">
                                     <a class="kobolg-menu-item-title" title="Blog"
                                        href="blog.html">Blog</a>
                                     <span class="toggle-submenu"></span>
-                                    <div class="submenu megamenu megamenu-blog">
+                                    {{-- <div class="submenu megamenu megamenu-blog">
                                         <div class="row">
                                             <div class="col-md-4">
                                                 <div class="kobolg-listitem style-01">
@@ -540,7 +540,7 @@
                                                 </div>
                                             </div>
                                         </div>
-                                    </div>
+                                    </div> --}}
                                 </li>
                                 <li id="menu-item-237"
                                     class="menu-item menu-item-type-custom menu-item-object-custom menu-item-has-children menu-item-237 parent">

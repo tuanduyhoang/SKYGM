@@ -58,13 +58,13 @@ Route::get('complete', 'CartController@getComplete')->name('complete');
 Route::post('/cart/send', 'CartController@postComplete')->name('post.complete');
 
 
-Route::resource('users','UsersController')->middleware('auth');
+Route::resource('users','UsersController');
 Route::group([
     'namespace' => 'Front',
     'prefix' => 'product',
     'as' => 'product.'
 ], function() {
-    Route::get('all', 'HomeController@all')->name('all')->middleware('auth');
+    Route::get('all', 'HomeController@all')->name('all');
     // Route::get('create', 'ProductController@create')->name('create');
     // Route::post('store', 'ProductController@store')->name('store');
     // Route::get('index', 'ProductController@index')->name('index');

@@ -27,7 +27,7 @@
                     </div>
                   	<p>Thank you for your order! Your order is being processed and should be completed within 3-6 hours.
                          You will receive a confirmation email when your order is complete.</p>
-                    <p>You will be redirected to home after 5s <?php header("refresh: 5; url = http://127.0.0.1:8000/");
+                    <p>You will be redirected to home after 10s <?php header("refresh: 10; url = http://127.0.0.1:8000/product/all");
                         // exit();
                     ?></p>
 
@@ -54,8 +54,8 @@
                                 <tr>
                                     <th class="product-remove">&nbsp;</th>
                                     <th class="product-thumbnail">&nbsp;</th>
-                                    <th class="product-name">Product</th>
-                                    <th class="product-price">Quantity</th>
+                                    <th class="product-name">Products</th>
+                                    {{-- <th class="product-price">Quantity</th> --}}
                                     <th class="product-quantity">Total</th>
                                     <th class="product-subtotal">Status</th>
                                     <th class="product-subtotal">Action</th>
@@ -80,8 +80,6 @@
                                                         </li>
                                                     @endforeach
                                                 </ul>
-                                            </td>
-                                            <td class="product-quantity" data-title="Quantity">
                                             </td>
                                             <td class="product-subtotal" data-title="Total">
                                                 <span class="kobolg-Price-amount amount"><span
@@ -198,14 +196,7 @@
                                         </div>
 
 
-                                        <form action="{{route('updatecart','rowId')}}" method="POST" enctype="multipart/form-data">
-                                            @csrf
-                                            @method('put')
-
-                                            <button type="submit" class="button" name="update_cart" value="Update cart"
-                                            >Go to gì đấy
-                                            </button>
-                                        </form>
+                                        <a href="{{route('product.all')}}">Go back to shopping</a>
                                         {{-- <div class="quantity-input">
                                             <input type="text" name="product-quatity" value="{{$item->qty}}" data-max="120" pattern="[0-9]*" >
                                             <a class="btn btn-increase" href="#" wire:click.prevent="increaseQuantity('{{$item->rowId}}')"></a>

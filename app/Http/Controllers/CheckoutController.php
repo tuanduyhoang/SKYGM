@@ -124,7 +124,7 @@ class CheckoutController extends Controller
         $vnp_TmnCode = "NWSRK596"; //Mã website tại VNPAY
         $vnp_HashSecret = "EUMMKFGWLMXAPPBKLDWRMYQXOOBNERXS"; //Chuỗi bí mật
 
-        $vnp_TxnRef = '9998'; //Mã đơn hàng. Trong thực tế Merchant cần insert đơn hàng vào DB và gửi mã này sang VNPAY
+        $vnp_TxnRef = '9997'; //Mã đơn hàng. Trong thực tế Merchant cần insert đơn hàng vào DB và gửi mã này sang VNPAY
         $vnp_OrderInfo = 'Thanh toán đơn hàng test';
         $vnp_OrderType = 'billpayment';
         $vnp_Amount = Cart::total() * 100;

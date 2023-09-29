@@ -36,5 +36,7 @@ Route::middleware('admin')->group(function (){
         Route::put('{product}', 'ProductController@update')->name('update');
         Route::delete('delete/{product}', 'ProductController@destroy')->name('destroy');
     });
+    Route::get('manage-order','Admin\OrderController@manage_order')->name('admin.manage');
+    Route::get('detail','Admin\OrderController@detail')->name('admin.detail');
     Route::post('/logout', 'Admin\Auth\LogoutController@logout')->name('admin.logout');
 });

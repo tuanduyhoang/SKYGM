@@ -200,7 +200,7 @@
                                                          class="attachment-kobolg_thumbnail size-kobolg_thumbnail"
                                                          alt="img" width="600" height="778">
                                                 </a>
-                                                <span class="quantity">{{$item->quantity}} × <span
+                                                <span class="quantity">{{$item->qty}} × <span
                                                         class="kobolg-Price-amount amount"><span
                                                         class="kobolg-Price-currencySymbol"></span>{{number_format($item->price)}} VNĐ</span></span>
 
